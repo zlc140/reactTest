@@ -8,28 +8,24 @@ export default class Counter extends Component {
         }
         console.log(this.props)
     }
-    handleNumber(val){
-        let nums = this.state.number
+    handAdd(val){
         if(val == 'add'){
-            nums += 1
-        }else if(val == 'cut' && nums>1){
-            nums = nums-1
+            this.props.increment(1)
         }else{
-            nums = 0
+            this.props.decrement(1)
         }
-        this.setState({number:nums})
-        this.props.getNum(nums)
     }
     render(){
         let nums = this.state.number
+        let {  number , increment,decrement} = this.props
         return(
             <div>
                
-                <button onClick={this.handleNumber.bind(this,'add')}>add</button>
+                <button onClick={this.handAdd.bind(this,'add')}>add</button>
                 {' ' }
-                <span>{nums}</span>
+                <span>{number}</span>
                 { ' '}
-                <button onClick={this.handleNumber.bind(this,'cut')}>cut</button>
+                <button onClick={this.handAdd.bind(this,'cut')}>cut</button>
             </div>
         )
     }

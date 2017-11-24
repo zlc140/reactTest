@@ -6,16 +6,6 @@ export const START = 'START'
 export const STOP = 'STOP'
 export const RESET = 'RESET'
 export const TIMER = 'TIMER'
-
+// counter
 export const INCREMENT = 'INCREMENT'
 export const DECREMENT = 'DECREMENT'
-
-
-
-
-export function getNumber(test){
-    return {
-        type:TIMER,
-        test
-    }
-}

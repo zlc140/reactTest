@@ -1,12 +1,13 @@
 import React, {Component, PropTypes} from 'react'
 import Elapse from '../Components/Elapse'
 import {connect} from 'react-redux'
-
+import {increment,decrement} from '../Redux/action/counterActions'
+import {bindActionCreators} from 'redux'
 
  class Main extends Component {
-    constructor(props){
-        super(props)
-
+    constructor(props,context){
+        super(props,context)
+        console.log('contend',this.context)
         this.state = {
             start:false,
             startTime: new Date().getTime(),
@@ -14,20 +15,21 @@ import {connect} from 'react-redux'
         }
 
     }
-    // startTime(){
-    //     this.setState({
-    //         start:!this.state.start
-    //     })
-    // }
+    startTime(){
+        this.setState({
+            start:!this.state.start
+        })
+    }
+    
     render(){
-        let {num} = this.props
+        let {num,increment,decrement} = this.props
+        let start = this.state.start
         return (
             <div>
-                定时器{'    '}<button onClick={this.startTime.bind(this)}>{start?'结束':'开始'}</button>
-                
+                定时器{'    '}
+                {/* <button onClick={this.startTime.bind(this)}>{start?'结束':'开始'}</button> */}
                 <br />
-                
-                 <Elapse datas={num} />  
+                 <Elapse {...num} increment={increment} decrement={decrement} />  
             </div>
         )
     }
@@ -37,12 +39,18 @@ import {connect} from 'react-redux'
 function mapStateToProps(state) {
     console.log('state',state)
     return {
-        num:state.timer
+        num:state.timer,
     }
 }
 function mapDispatchToProps(dispatch){
+    // return {actions: bindActionCreators(increment,dispatch)}
     return {
-        onIncreaseClick: ()  => dispatch(getNumber)
+        increment: ()  => {
+            dispatch(increment(1))
+        },
+        decrement: () => {
+            dispatch(decrement(1))
+        }
     }
 }
 

@@ -2,8 +2,10 @@ import React, { Component, PropTypes } from 'react'
 import Counter from '../Components/Counter'
 import {connect} from 'react-redux'
 
+import * as CounterActions from '../Redux/action/counterActions'
+import {bindActionCreators} from 'redux'
 
-export default class DetailView extends Component {
+class DetailView extends Component {
     constructor(props,context) {
         super(props,context)
         this.state = {
@@ -11,15 +13,11 @@ export default class DetailView extends Component {
             pro: null
         }
     }
-    okSublime() {
-        console.log(this.state.nums)
-    }
-    getNum(val) {
-        this.setState({ nums: val })
-    }
+    okSublime(){
 
+    }
     render() {
-        console.log(this.props)
+        let  { num, actions } = this.props
         let detail = null
         if (this.state.pro != null) {
             let child = this.state.pro
@@ -28,7 +26,9 @@ export default class DetailView extends Component {
                 <br />
                 <p>商品名称:{child.name}</p>
                 <p>商品id:{child.id}</p>
-                <Counter nums={child.num} getNum={this.getNum.bind(this)} />
+                {/* <Counter {...num} getNum={this.getNum.bind(this)} /> */}
+                {/* <Counter {...num} increment={increment} decrement={decrement} /> */}
+                <Counter {...num} {...actions} />
                 <button onClick={this.okSublime.bind(this)}>保存</button>
             </div>
             )
@@ -51,6 +51,7 @@ export default class DetailView extends Component {
             { id: 3, name: '嘿嘿嘿', num: 24 },
             { id: 4, name: '呵呵呵', num: 2 }
         ]
+        
         let _this = this
         const detail = lists.map((child, index) => {
             if (child.id == this.props.params.id) {
@@ -62,6 +63,22 @@ export default class DetailView extends Component {
         })
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        num:state.counter,
+    }
+}
+ 
+const  mapDispatchToProps = (dispatch) => ({
+     actions: bindActionCreators(CounterActions,dispatch)
+})
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(DetailView)
 
 
 // module.exports = DetailView
