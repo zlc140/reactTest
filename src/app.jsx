@@ -7,7 +7,7 @@ import { hashHistory } from 'react-router'
 import store from './Redux/Store'
 console.log(store)
 store.subscribe(() => { //监听state变化
-    console.log(store.getState())
+    // console.log(store.getState())
 });
 
 import Root from './Containers/Root'

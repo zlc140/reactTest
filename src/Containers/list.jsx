@@ -1,41 +1,40 @@
 import React, {Component, PropTypes} from 'react'
 import Product from '../Components/Product'
 import { connect } from 'react-redux'
-
-  class ListView extends Component {
+import { getList } from '../service'
+export default  class ListView extends Component {
     
     constructor(props,context) {
         super(props,context)
+        this.state = {
+            fetching:false,
+            lists:[]
+        }
         let {store} = this.context
         console.log(this.props,store)
     }
     render() {
-        let lists = [
-            {id:0,name:'哈哈哈',num:2},
-            {id:1,name:'嘎嘎嘎',num:2},
-            {id:2,name:'哇哇哇',num:4},
-            {id:3,name:'嘿嘿嘿',num:24},
-            {id:4,name:'呵呵呵',num:2}
-        ]
-        let { value } = this.props
+        let _this = this
         return (
             <div >
                 <h4>我是列表页</h4>
                 <ul>
                     {
-                        lists.map((prop,index) => <Product value={value} detail={prop} key={index} />)
+                        !_this.state.fetching && _this.state.lists.map((prop,index) => <Product detail={prop} key={index} />)
+                       
                     }
+                    {
+                        _this.state.fetching &&<span>记载中。。。<img src="http://obl1r1s1x.bkt.clouddn.com/loading.gif" alt="loading"/></span>
+                    }
+
                 </ul>
             </div>
         )
     }
-} 
-function mapStateToProps(state) {
-    return {
-      value: state.seconds
+    componentDidMount(){
+        this.setState({'fetching':true})
+        getList().then(res => {
+            this.setState({'lists':res,'fetching':false})
+        })
     }
-}
-
-export default connect(
-    mapStateToProps
-  )(ListView)
+} 

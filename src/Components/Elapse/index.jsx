@@ -1,18 +1,36 @@
 import React, {Component, PropTypes} from 'react'
+import './elapse.scss'
 var interval = null
 export default class Main extends Component {
     constructor(props,context){
         super(props,context)
         
     }
- 
+    handClick(){
+        let _this = this
+        this.props.onstart()
+        
+            interval = setInterval(function(){
+                _this.props.ontimer()
+            },1000)
+         
+    }
+    handEnd(){
+        clearInterval(interval)
+        this.props.onstop()
+         
+    }
+    handReset(){
+        clearInterval(interval)
+        this.props.onreset()
+    }
     render(){
-        console.log(this.props)
-       let {  number , seconds ,status, increment} = this.props
+       let { seconds ,status, onstart, onstop, onreset, ontimer } = this.props
         return (
             <div>
-                <button onClick={increment} >{status=="Stopped"?'结束':'开始'}</button>
-                <p>开始时间：<span>{number}</span></p>
+                <button className="btn" onClick={this.handClick.bind(this)} >开始</button>
+                <button className="btn" onClick={this.handEnd.bind(this)} >结束</button>
+                <button className="btn" onClick={this.handReset.bind(this)} >重置</button>
                 { seconds } 
             </div>
         )

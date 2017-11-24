@@ -2,6 +2,11 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
+function resolve (dir) {
+    return path.join(__dirname, '..', dir)
+  }
+
+  
 module.exports = {
     entry:{
         app:['react-hot-loader/patch','webpack-hot-middleware/client?reload=true','./src/app.jsx'],
@@ -17,7 +22,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx', '.json'],
         alias: {
-          '@': path.join(__dirname, '..', 'src')
+          '@': resolve('src')
         }
     },
     devServer:{
