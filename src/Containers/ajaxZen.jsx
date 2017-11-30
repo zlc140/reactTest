@@ -31,7 +31,6 @@ export default class Main extends Component{
         return(
             <div>
                 <button className="btn" onClick={this.fetchZen.bind(this)}>{ fetching ? '请求中...':'请求'}</button>
-
                 <ul>
                     {
                         this.state.lists.length>0 ? this.state.lists.map((one,index) => <li key={index}>{one}</li>):'暂无信息'

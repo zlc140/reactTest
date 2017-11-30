@@ -24,7 +24,7 @@ export default  class ListView extends Component {
                        
                     }
                     {
-                        _this.state.fetching &&<span>记载中。。。<img src="http://obl1r1s1x.bkt.clouddn.com/loading.gif" alt="loading"/></span>
+                        _this.state.fetching &&<span><img src="http://obl1r1s1x.bkt.clouddn.com/loading.gif" alt="loading"/></span>
                     }
 
                 </ul>
